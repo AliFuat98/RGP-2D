@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+  [Header("Move Info")]
+  public float moveSpeed = 6f;
+
   #region Components
 
   public Animator animator { get; private set; }
+  public Rigidbody2D rb { get; private set; }
 
   #endregion Components
 
@@ -24,10 +28,23 @@ public class Player : MonoBehaviour {
 
   private void Start() {
     animator = GetComponentInChildren<Animator>();
+    rb = GetComponent<Rigidbody2D>();
     stateMachine.Initialize(idleState);
   }
 
   private void Update() {
     stateMachine.currentState.Update();
+  }
+
+  public void SetVelocity(float xVelocity, float yVelocity) {
+    rb.velocity = new Vector2(xVelocity, yVelocity);
+  }
+
+  public void SetVelocityOnlyX(float xVelocity) {
+    rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+  }
+
+  public void SetVelocityOnlyY(float yVelocity) {
+    rb.velocity = new Vector2(rb.velocity.x, yVelocity);
   }
 }
