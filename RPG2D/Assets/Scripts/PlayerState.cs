@@ -13,14 +13,14 @@ public class PlayerState {
   }
 
   public virtual void Enter() {
-    Debug.Log($"enter {animBoolName}");
+    player.animator.SetBool(animBoolName, true);
   }
 
   public virtual void Update() {
-    Debug.Log($"exit {animBoolName}");
+    Debug.Log($"update {animBoolName}");
   }
 
   public virtual void Exit() {
-    Debug.Log($"exit {animBoolName}");
+    player.animator.SetBool(animBoolName, false);
   }
 }

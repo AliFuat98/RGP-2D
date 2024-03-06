@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveState : PlayerState {
+
   public PlayerMoveState(PlayerStateMachine _stateMachine, Player _player, string _animBoolName) : base(_stateMachine, _player, _animBoolName) {
   }
 
@@ -16,5 +17,9 @@ public class PlayerMoveState : PlayerState {
 
   public override void Update() {
     base.Update();
+
+    if (Input.GetKeyDown(KeyCode.Space)) {
+      stateMachine.ChangeState(player.idleState);
+    }
   }
 }
