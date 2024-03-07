@@ -22,8 +22,7 @@ public class PlayerIdleState : PlayerGroundedState {
     }
 
     //if (xInput != 0 && !player.isBussy) {
-    //if (xInput != 0 ) {
-    if (xInput != 0 && !triggerCalled) {
+    if (xInput != 0 ) {
       stateMachine.ChangeState(player.moveState);
     }
   }
