@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerDashState : PlayerState {
 
   public PlayerDashState(PlayerStateMachine _stateMachine, Player _player, string _animBoolName) : base(_stateMachine, _player, _animBoolName) {
@@ -20,6 +16,10 @@ public class PlayerDashState : PlayerState {
 
   public override void Update() {
     base.Update();
+
+    if (!player.IsGroundDetected() && player.IsWallDetected()) {
+      stateMachine.ChangeState(player.wallSlideState);
+    }
 
     player.SetVelocity(player.dashSpeed * player.dashDirection, 0f);
 

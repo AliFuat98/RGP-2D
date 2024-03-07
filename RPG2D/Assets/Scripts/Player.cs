@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -44,6 +43,8 @@ public class Player : MonoBehaviour {
   public PlayerAirState airState { get; private set; }
   public PlayerDashState dashState { get; private set; }
   public PlayerWallSlideState wallSlideState { get; private set; }
+  public PlayerWallJumpState wallJumpState { get; private set; }
+  public PlayerPrimaryAttackState primaryAttackState { get; private set; }
 
   #endregion States
 
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour {
     airState = new PlayerAirState(stateMachine, this, "Jump");
     dashState = new PlayerDashState(stateMachine, this, "Dash");
     wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
+    wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
+    primaryAttackState = new PlayerPrimaryAttackState(stateMachine, this, "Attack");
   }
 
   private void Start() {
@@ -70,6 +73,11 @@ public class Player : MonoBehaviour {
 
   private void CheckForDashInput() {
     dashUsageTimer -= Time.deltaTime;
+
+    if (IsWallDetected()) {
+      dashUsageTimer = -1;
+      return;
+    }
 
     if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0) {
       dashUsageTimer = dashCoolDown;

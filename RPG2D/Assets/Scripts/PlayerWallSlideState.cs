@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerWallSlideState : PlayerState {
@@ -18,6 +15,11 @@ public class PlayerWallSlideState : PlayerState {
 
   public override void Update() {
     base.Update();
+
+    if (Input.GetKeyDown(KeyCode.Space)) {
+      stateMachine.ChangeState(player.wallJumpState);
+      return;
+    }
 
     if (xInput != 0 && player.facingDirection != xInput) {
       stateMachine.ChangeState(player.idleState);
