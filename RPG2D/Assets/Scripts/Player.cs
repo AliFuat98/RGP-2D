@@ -1,6 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+
+  [Header("Attack Info")]
+  public Vector2[] attackMovement;
+  public float comboWindow = 2f;
+  public bool isBussy { get; private set; }
 
   [Header("Move Info")]
   public float moveSpeed = 6f;
@@ -69,6 +75,14 @@ public class Player : MonoBehaviour {
   private void Update() {
     CheckForDashInput();
     stateMachine.currentState.Update();
+  }
+
+  public IEnumerator BusyFor(float seconds) {
+    isBussy = true;
+
+    yield return new WaitForSeconds(seconds);
+
+    isBussy = false;
   }
 
   public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
