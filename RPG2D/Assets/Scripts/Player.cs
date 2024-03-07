@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -6,6 +7,8 @@ public class Player : MonoBehaviour {
   public float moveSpeed = 6f;
 
   public float jumpForce = 12f;
+  public float dashSpeed = 12f;
+  public float dashDuration = 1.5f;
 
   [Header("Collision Info")]
   [SerializeField] private Transform groundCheck;
@@ -15,6 +18,9 @@ public class Player : MonoBehaviour {
   [SerializeField] private Transform wallCheck;
   [SerializeField] private float wallCheckDistance;
   [SerializeField] private LayerMask wallLayer;
+
+  public int facingDirection { get; private set; } = 1;
+  private bool facingRight = true;
 
   #region Components
 
@@ -30,6 +36,7 @@ public class Player : MonoBehaviour {
   public PlayerMoveState moveState { get; private set; }
   public PlayerJumpState jumpState { get; private set; }
   public PlayerAirState airState { get; private set; }
+  public PlayerDashState dashState { get; private set; }
 
   #endregion States
 
@@ -39,6 +46,7 @@ public class Player : MonoBehaviour {
     moveState = new PlayerMoveState(stateMachine, this, "Move");
     jumpState = new PlayerJumpState(stateMachine, this, "Jump");
     airState = new PlayerAirState(stateMachine, this, "Jump");
+    dashState = new PlayerDashState(stateMachine, this, "Dash");
   }
 
   private void Start() {
@@ -53,9 +61,24 @@ public class Player : MonoBehaviour {
 
   public void SetVelocity(float xVelocity, float yVelocity) {
     rb.velocity = new Vector2(xVelocity, yVelocity);
+    FlipController(xVelocity);
   }
 
   public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
+
+  public void FlipController(float xVelocity) {
+    if (xVelocity > 0 && !facingRight) {
+      Flip();
+    } else if (xVelocity < 0 && facingRight) {
+      Flip();
+    }
+  }
+
+  public void Flip() {
+    facingDirection *= -1;
+    facingRight = !facingRight;
+    transform.Rotate(0, 180, 0);
+  }
 
   private void OnDrawGizmos() {
     Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
