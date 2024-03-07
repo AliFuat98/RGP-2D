@@ -7,8 +7,14 @@ public class Player : MonoBehaviour {
   public float moveSpeed = 6f;
 
   public float jumpForce = 12f;
+
+  [Header("Dash Info")]
   public float dashSpeed = 12f;
+
   public float dashDuration = 1.5f;
+  public float dashDirection { get; private set; }
+  [SerializeField] private float dashCoolDown;
+  private float dashUsageTimer;
 
   [Header("Collision Info")]
   [SerializeField] private Transform groundCheck;
@@ -57,6 +63,24 @@ public class Player : MonoBehaviour {
 
   private void Update() {
     stateMachine.currentState.Update();
+
+    CheckForDashInput();
+  }
+
+  private void CheckForDashInput() {
+    dashUsageTimer -= Time.deltaTime;
+
+    if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0) {
+      dashUsageTimer = dashCoolDown;
+
+      dashDirection = Input.GetAxisRaw("Horizontal");
+
+      if (dashDirection == 0) {
+        dashDirection = facingDirection;
+      }
+
+      stateMachine.ChangeState(dashState);
+    }
   }
 
   public void SetVelocity(float xVelocity, float yVelocity) {
