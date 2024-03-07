@@ -71,6 +71,8 @@ public class Player : MonoBehaviour {
     stateMachine.currentState.Update();
   }
 
+  public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+
   private void CheckForDashInput() {
     dashUsageTimer -= Time.deltaTime;
 
