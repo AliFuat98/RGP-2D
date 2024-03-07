@@ -43,6 +43,7 @@ public class Player : MonoBehaviour {
   public PlayerJumpState jumpState { get; private set; }
   public PlayerAirState airState { get; private set; }
   public PlayerDashState dashState { get; private set; }
+  public PlayerWallSlideState wallSlideState { get; private set; }
 
   #endregion States
 
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour {
     jumpState = new PlayerJumpState(stateMachine, this, "Jump");
     airState = new PlayerAirState(stateMachine, this, "Jump");
     dashState = new PlayerDashState(stateMachine, this, "Dash");
+    wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
   }
 
   private void Start() {
@@ -62,9 +64,8 @@ public class Player : MonoBehaviour {
   }
 
   private void Update() {
-    stateMachine.currentState.Update();
-
     CheckForDashInput();
+    stateMachine.currentState.Update();
   }
 
   private void CheckForDashInput() {
@@ -89,6 +90,8 @@ public class Player : MonoBehaviour {
   }
 
   public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
+
+  public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
 
   public void FlipController(float xVelocity) {
     if (xVelocity > 0 && !facingRight) {
