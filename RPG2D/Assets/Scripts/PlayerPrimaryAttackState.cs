@@ -29,7 +29,7 @@ public class PlayerPrimaryAttackState : PlayerState {
   public override void Exit() {
     base.Exit();
 
-    player.StartCoroutine(nameof(Player.BusyFor), 0.15f);
+    player.StartCoroutine(nameof(Player.BusyFor), 0.1f);
 
     comboCounter++;
     lastTimeAttacked = Time.time;
@@ -38,6 +38,7 @@ public class PlayerPrimaryAttackState : PlayerState {
   public override void Update() {
     base.Update();
 
+    // wait 0.1 second for to stop
     if (stateTimer < 0) {
       rb.velocity = Vector2.zero;
     }

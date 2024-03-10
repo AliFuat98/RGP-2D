@@ -70,6 +70,7 @@ public class Player : MonoBehaviour {
     animator = GetComponentInChildren<Animator>();
     rb = GetComponent<Rigidbody2D>();
     stateMachine.Initialize(idleState);
+    //Application.targetFrameRate = 20;
   }
 
   private void Update() {
@@ -90,6 +91,7 @@ public class Player : MonoBehaviour {
   private void CheckForDashInput() {
     dashUsageTimer -= Time.deltaTime;
 
+    // reset dash when you see a wall
     if (IsWallDetected()) {
       dashUsageTimer = -1;
       return;

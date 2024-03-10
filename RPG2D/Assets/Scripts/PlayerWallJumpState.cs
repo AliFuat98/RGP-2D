@@ -6,7 +6,6 @@ public class PlayerWallJumpState : PlayerState {
   public override void Enter() {
     base.Enter();
 
-    stateTimer = 0.4f;
     player.SetVelocity(5 * -player.facingDirection, player.jumpForce);
   }
 
@@ -22,7 +21,7 @@ public class PlayerWallJumpState : PlayerState {
       return;
     }
 
-    if (stateTimer < 0) {
+    if (rb.velocity.y < 0) {
       stateMachine.ChangeState(player.airState);
     }
   }
