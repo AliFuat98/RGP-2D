@@ -13,11 +13,11 @@ public class PlayerState {
 
   protected bool triggerCalled;
 
-  public PlayerState(PlayerStateMachine _stateMachine, Player _player, string _animBoolName) {
-    stateMachine = _stateMachine;
-    player = _player;
-    animBoolName = _animBoolName;
-    rb = player.GetComponent<Rigidbody2D>();
+  public PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName) {
+    this.stateMachine = stateMachine;
+    this.player = player;
+    this.animBoolName = animBoolName;
+    rb = this.player.GetComponent<Rigidbody2D>();
   }
 
   public virtual void Enter() {

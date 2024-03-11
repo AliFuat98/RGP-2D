@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : Entitiy {
 
   [Header("Attack Info")]
   public Vector2[] attackMovement;
+
   public float comboWindow = 2f;
   public bool isBussy { get; private set; }
 
@@ -21,25 +22,6 @@ public class Player : MonoBehaviour {
   [SerializeField] private float dashCoolDown;
   private float dashUsageTimer;
 
-  [Header("Collision Info")]
-  [SerializeField] private Transform groundCheck;
-
-  [SerializeField] private float groundCheckDistance;
-  [SerializeField] private LayerMask groundLayer;
-  [SerializeField] private Transform wallCheck;
-  [SerializeField] private float wallCheckDistance;
-  [SerializeField] private LayerMask wallLayer;
-
-  public int facingDirection { get; private set; } = 1;
-  private bool facingRight = true;
-
-  #region Components
-
-  public Animator animator { get; private set; }
-  public Rigidbody2D rb { get; private set; }
-
-  #endregion Components
-
   #region States
 
   public PlayerStateMachine stateMachine { get; private set; }
@@ -54,7 +36,9 @@ public class Player : MonoBehaviour {
 
   #endregion States
 
-  private void Awake() {
+  protected override void Awake() {
+    base.Awake();
+
     stateMachine = new PlayerStateMachine();
     idleState = new PlayerIdleState(stateMachine, this, "Idle");
     moveState = new PlayerMoveState(stateMachine, this, "Move");
@@ -66,14 +50,15 @@ public class Player : MonoBehaviour {
     primaryAttackState = new PlayerPrimaryAttackState(stateMachine, this, "Attack");
   }
 
-  private void Start() {
-    animator = GetComponentInChildren<Animator>();
-    rb = GetComponent<Rigidbody2D>();
+  protected override void Start() {
+    base.Start();
     stateMachine.Initialize(idleState);
     //Application.targetFrameRate = 20;
   }
 
-  private void Update() {
+  protected override void Update() {
+    base.Update();
+
     CheckForDashInput();
     stateMachine.currentState.Update();
   }
@@ -108,33 +93,5 @@ public class Player : MonoBehaviour {
 
       stateMachine.ChangeState(dashState);
     }
-  }
-
-  public void SetVelocity(float xVelocity, float yVelocity) {
-    rb.velocity = new Vector2(xVelocity, yVelocity);
-    FlipController(xVelocity);
-  }
-
-  public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer);
-
-  public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
-
-  public void FlipController(float xVelocity) {
-    if (xVelocity > 0 && !facingRight) {
-      Flip();
-    } else if (xVelocity < 0 && facingRight) {
-      Flip();
-    }
-  }
-
-  public void Flip() {
-    facingDirection *= -1;
-    facingRight = !facingRight;
-    transform.Rotate(0, 180, 0);
-  }
-
-  private void OnDrawGizmos() {
-    Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-    Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
   }
 }
