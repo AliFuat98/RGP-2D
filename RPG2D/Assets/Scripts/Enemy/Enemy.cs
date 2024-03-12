@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : Entitiy {
 
-  #region Components
+  [Header("Move Info")]
+  public float moveSpeed;
+  public float idleTime;
 
-  public Animator animator { get; private set; }
-  public Rigidbody2D rb { get; private set; }
+  public EnemyStateMachine stateMachine { get; private set; }
 
-  #endregion Components
+  protected override void Awake() {
+    stateMachine = new EnemyStateMachine();
+  }
 
+  protected override void Start() {
+    base.Start();
+  }
 
-  #region States
+  protected override void Update() {
+    base.Update();
 
-  public PlayerStateMachine stateMachine { get; private set; }
-
-  #endregion States
-
-  private void Awake() {
-    stateMachine = new PlayerStateMachine();
+    stateMachine.currentState.Update();
   }
 }
