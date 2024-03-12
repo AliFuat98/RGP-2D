@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyState {
   protected EnemyStateMachine stateMachine;
   protected Enemy enemyBase;
+  protected Rigidbody2D rb;
 
   private string animBoolName;
 
@@ -13,6 +14,7 @@ public class EnemyState {
     this.enemyBase = enemyBase;
     this.stateMachine = stateMachine;
     this.animBoolName = animBoolName;
+    rb = this.enemyBase.GetComponent<Rigidbody2D>();
   }
 
   public virtual void Enter() {
@@ -28,4 +30,9 @@ public class EnemyState {
     triggerCalled = true;
     enemyBase.animator.SetBool(animBoolName, false);
   }
+
+  public virtual void AnimationFinishTrigger() {
+    triggerCalled = true;
+  }
+
 }

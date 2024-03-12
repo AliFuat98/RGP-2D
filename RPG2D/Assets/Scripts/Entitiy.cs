@@ -39,6 +39,10 @@ public class Entitiy : MonoBehaviour {
     FlipController(xVelocity);
   }
 
+  public void SetZeroVelocity() {
+    rb.velocity = new Vector2(0f, 0f);
+  }
+
   public virtual void FlipController(float xVelocity) {
     if (xVelocity > 0 && !facingRight) {
       Flip();

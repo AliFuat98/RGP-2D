@@ -1,8 +1,6 @@
-public class SkeletonIdleState : EnemyState {
-  private EnemySkeleton enemy;
+public class SkeletonIdleState : SkeletonGroundedState {
 
-  public SkeletonIdleState(Enemy enemyBase, EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName) {
-    this.enemy = enemy;
+  public SkeletonIdleState(Enemy enemyBase, EnemySkeleton enemy, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, enemy, stateMachine, animBoolName) {
   }
 
   public override void Enter() {

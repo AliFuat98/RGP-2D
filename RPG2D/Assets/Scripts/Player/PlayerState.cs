@@ -37,7 +37,7 @@ public class PlayerState {
     player.animator.SetBool(animBoolName, false);
   }
 
-  public void AnimationFinishTrigger() {
+  public virtual void AnimationFinishTrigger() {
     triggerCalled = true;
   }
 }
