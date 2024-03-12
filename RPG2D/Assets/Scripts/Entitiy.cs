@@ -12,8 +12,11 @@ public class Entitiy : MonoBehaviour {
   #endregion Components
 
   [Header("Collision Info")]
-  [SerializeField] protected Transform groundCheck;
+  public Transform attackCheck;
 
+  public float attackCheckRadius;
+
+  [SerializeField] protected Transform groundCheck;
   [SerializeField] protected float groundCheckDistance;
   [SerializeField] protected LayerMask groundLayer;
   [SerializeField] protected Transform wallCheck;
@@ -61,8 +64,14 @@ public class Entitiy : MonoBehaviour {
 
   public virtual bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
 
+  public virtual void Damage() {
+    Debug.Log($"{gameObject.name} was damaged");
+  }
+
   protected virtual void OnDrawGizmos() {
     Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
     Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+    Gizmos.color = Color.blue;
+    Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
   }
 }
