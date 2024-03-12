@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Entitiy : MonoBehaviour {
@@ -8,6 +6,7 @@ public class Entitiy : MonoBehaviour {
 
   public Animator animator { get; private set; }
   public Rigidbody2D rb { get; private set; }
+  public EntityFX entityFX { get; private set; }
 
   #endregion Components
 
@@ -31,6 +30,7 @@ public class Entitiy : MonoBehaviour {
 
   protected virtual void Start() {
     animator = GetComponentInChildren<Animator>();
+    entityFX = GetComponent<EntityFX>();
     rb = GetComponent<Rigidbody2D>();
   }
 
@@ -65,6 +65,7 @@ public class Entitiy : MonoBehaviour {
   public virtual bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
 
   public virtual void Damage() {
+    entityFX.StartCoroutine(nameof(EntityFX.FlashFX));
     Debug.Log($"{gameObject.name} was damaged");
   }
 

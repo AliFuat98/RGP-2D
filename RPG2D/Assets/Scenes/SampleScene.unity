@@ -2899,6 +2899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1818435711}
   - component: {fileID: 1818435712}
+  - component: {fileID: 1818435715}
   - component: {fileID: 1818435713}
   - component: {fileID: 1818435714}
   m_Layer: 7
@@ -3023,6 +3024,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1818435715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818435710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d72ca6ec3b4364e94ad12c3583027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMaterial: {fileID: 2100000, guid: e6404ce419f96fa4fb2ee0d195f633a3, type: 2}
+  flashDuration: 0.2
 --- !u!1 &1831860019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,6 +3079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1903469244}
   - component: {fileID: 1903469245}
+  - component: {fileID: 1903469248}
   - component: {fileID: 1903469247}
   - component: {fileID: 1903469246}
   m_Layer: 8
@@ -3199,6 +3215,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1903469248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903469243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d72ca6ec3b4364e94ad12c3583027b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMaterial: {fileID: 2100000, guid: e6404ce419f96fa4fb2ee0d195f633a3, type: 2}
+  flashDuration: 0.2
 --- !u!1 &1984428957
 GameObject:
   m_ObjectHideFlags: 0
