@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entitiy : MonoBehaviour {
@@ -9,6 +10,12 @@ public class Entitiy : MonoBehaviour {
   public EntityFX entityFX { get; private set; }
 
   #endregion Components
+
+  [Header("Knockback Info")]
+  [SerializeField] protected Vector2 knockbackDirection;
+
+  [SerializeField] protected float knockbackDuration;
+  [SerializeField] protected bool isKnocked;
 
   [Header("Collision Info")]
   public Transform attackCheck;
@@ -38,11 +45,19 @@ public class Entitiy : MonoBehaviour {
   }
 
   public void SetVelocity(float xVelocity, float yVelocity) {
+    if (isKnocked) {
+      return;
+    }
+
     rb.velocity = new Vector2(xVelocity, yVelocity);
     FlipController(xVelocity);
   }
 
   public void SetZeroVelocity() {
+    if (isKnocked) {
+      return;
+    }
+
     rb.velocity = new Vector2(0f, 0f);
   }
 
@@ -64,9 +79,16 @@ public class Entitiy : MonoBehaviour {
 
   public virtual bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, groundLayer);
 
-  public virtual void Damage() {
+  public virtual void Damage(int knockDirection) {
     entityFX.StartCoroutine(nameof(EntityFX.FlashFX));
-    Debug.Log($"{gameObject.name} was damaged");
+    StartCoroutine(nameof(HitKnockback),knockDirection);
+  }
+
+  protected virtual IEnumerator HitKnockback(int knockDirection) {
+    isKnocked = true;
+    rb.velocity = new Vector2(knockbackDirection.x * knockDirection, knockbackDirection.y);
+    yield return new WaitForSeconds(knockbackDuration);
+    isKnocked = false;
   }
 
   protected virtual void OnDrawGizmos() {

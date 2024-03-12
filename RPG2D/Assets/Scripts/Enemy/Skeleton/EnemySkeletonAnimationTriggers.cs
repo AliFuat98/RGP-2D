@@ -12,7 +12,7 @@ public class EnemySkeletonAnimationTriggers : MonoBehaviour {
 
     foreach (Collider2D hit in colliders) {
       if (hit.GetComponent<Player>() != null) {
-        hit.GetComponent<Player>().Damage();
+        hit.GetComponent<Player>().Damage(enemy.facingDirection);
       }
     }
   }

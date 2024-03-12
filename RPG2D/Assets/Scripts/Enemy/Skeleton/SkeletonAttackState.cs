@@ -13,7 +13,7 @@ public class SkeletonAttackState : EnemyState {
     base.Enter();
 
     player = GameObject.Find("Player").transform;
-    enemy.SetZeroVelocity();
+    enemy.SetZeroVelocity(); 
   }
 
   public override void Exit() {
