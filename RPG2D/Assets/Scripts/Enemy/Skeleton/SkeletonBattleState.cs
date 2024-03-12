@@ -24,19 +24,25 @@ public class SkeletonBattleState : EnemyState {
 
     RaycastHit2D hitPlayer = enemy.IsPlayerDetected();
     if (hitPlayer) {
+      stateTimer = enemy.battleTime;
       if (hitPlayer.distance < enemy.attackDistance) {
         if (CanAttack()) {
           stateMachine.ChangeState(enemy.AttackState);
         }
       }
+    } else {
+      // no player Detected
+      if (stateTimer < 0 || Vector2.Distance(player.position, enemy.transform.position) > enemy.battleRange) {
+        stateMachine.ChangeState(enemy.IdleState);
+      }
     }
 
+    // move towards player
     if (player.position.x > enemy.transform.position.x) {
       moveDir = 1;
     } else {
       moveDir = -1;
     }
-
     enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
   }
 

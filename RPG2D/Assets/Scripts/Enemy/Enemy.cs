@@ -7,6 +7,9 @@ public class Enemy : Entitiy {
   public float moveSpeed;
 
   public float idleTime;
+  public float battleTime;
+  public float battleRange;
+  public float backBattleRange;
 
   [Header("Attack Info")]
   public float attackDistance;
