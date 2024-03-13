@@ -18,4 +18,17 @@ public class EntityFX : MonoBehaviour {
     yield return new WaitForSeconds(flashDuration);
     spriteRenderer.material = originalMaterial;
   }
+
+  public void RedColorBlink() {
+    if (spriteRenderer.color != Color.white) {
+      spriteRenderer.color = Color.white;
+    } else {
+      spriteRenderer.color = Color.red;
+    }
+  }
+
+  private void CancelColorBlink() {
+    CancelInvoke();
+    spriteRenderer.color = Color.white;
+  }
 }
