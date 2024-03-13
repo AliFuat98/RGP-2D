@@ -20,8 +20,6 @@ public class Player : Entitiy {
 
   public float dashDuration = 1.5f;
   public float dashDirection { get; private set; }
-  [SerializeField] private float dashCoolDown;
-  private float dashUsageTimer;
 
   #region States
 
@@ -77,17 +75,12 @@ public class Player : Entitiy {
   public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
   private void CheckForDashInput() {
-    dashUsageTimer -= Time.deltaTime;
-
     // reset dash when you see a wall
     if (IsWallDetected()) {
-      dashUsageTimer = -1;
       return;
     }
 
-    if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0) {
-      dashUsageTimer = dashCoolDown;
-
+    if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dashSkill.CanUseSkill()) {
       dashDirection = Input.GetAxisRaw("Horizontal");
 
       if (dashDirection == 0) {
