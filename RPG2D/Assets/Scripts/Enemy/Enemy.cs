@@ -50,7 +50,7 @@ public class Enemy : Entitiy {
     counterImage.SetActive(false);
   }
 
-  protected virtual bool CanBeStunned() {
+  public virtual bool CanBeStunned() {
     if (canBeStunned) {
       CloseCounterAttackWindow();
       return true;
@@ -61,7 +61,7 @@ public class Enemy : Entitiy {
 
   public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
-  public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, 50, PlayerLayerMask);
+  public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(transform.position, Vector2.right * facingDirection, 50, PlayerLayerMask);
 
   protected override void OnDrawGizmos() {
     base.OnDrawGizmos();

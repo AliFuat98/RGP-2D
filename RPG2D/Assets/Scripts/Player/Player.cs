@@ -8,6 +8,7 @@ public class Player : Entitiy {
 
   public float comboWindow = 2f;
   public bool isBussy { get; private set; }
+  public float counterAttackDuration;
 
   [Header("Move Info")]
   public float moveSpeed = 6f;
@@ -33,6 +34,7 @@ public class Player : Entitiy {
   public PlayerWallSlideState wallSlideState { get; private set; }
   public PlayerWallJumpState wallJumpState { get; private set; }
   public PlayerPrimaryAttackState primaryAttackState { get; private set; }
+  public PlayerCounterAttackState counterAttackState { get; private set; }
 
   #endregion States
 
@@ -48,6 +50,7 @@ public class Player : Entitiy {
     wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
     wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
     primaryAttackState = new PlayerPrimaryAttackState(stateMachine, this, "Attack");
+    counterAttackState = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
   }
 
   protected override void Start() {

@@ -43,6 +43,7 @@ public class SkeletonBattleState : EnemyState {
     } else {
       moveDir = -1;
     }
+
     enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
   }
 
