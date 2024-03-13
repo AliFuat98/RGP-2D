@@ -5,7 +5,10 @@ public class Enemy : Entitiy {
 
   [Header("Stunned Info")]
   public float stunDuration;
+
   public Vector2 stunDirection;
+  public bool canBeStunned;
+  [SerializeField] protected GameObject counterImage;
 
   [Header("Move Info")]
   public float moveSpeed;
@@ -17,6 +20,7 @@ public class Enemy : Entitiy {
 
   [Header("Attack Info")]
   public float attackDistance;
+
   public float attackCooldown;
   [HideInInspector] public float lastTimeAttacked;
 
@@ -34,6 +38,25 @@ public class Enemy : Entitiy {
     base.Update();
 
     stateMachine.currentState.Update();
+  }
+
+  public virtual void OpenCounterAttackWindow() {
+    canBeStunned = true;
+    counterImage.SetActive(true);
+  }
+
+  public virtual void CloseCounterAttackWindow() {
+    canBeStunned = false;
+    counterImage.SetActive(false);
+  }
+
+  protected virtual bool CanBeStunned() {
+    if (canBeStunned) {
+      CloseCounterAttackWindow();
+      return true;
+    }
+
+    return false;
   }
 
   public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
